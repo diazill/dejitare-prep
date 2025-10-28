@@ -15,4 +15,4 @@ function caritotal(arr, nilai) {
 
 const target = 100;
 const harga = [30, 40, 70, 50];
-console.log(caritotal(harga, target));
+console.log(JSON.stringify(caritotal(harga, target)));

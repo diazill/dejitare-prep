@@ -1,9 +1,11 @@
-select o.customer_id, p.name, sum(oi.quantity)
-
-from orders as o
-left join order_items as oi on oi.order_id = o.id
-left join products p on p.id = oi.product_id
-
-where DATEDIFF(DAY,o.created_at, GETDATE())  <= 30
-
-group by p.name, o.customer_id, oi.quantity, o.id
+SELECT TOP 10
+  pr.id,
+  pr.name,
+  SUM(oi.quantity) AS qty_sold
+FROM dbo.orders        AS o
+JOIN dbo.payments      AS pay ON pay.order_id = o.id AND pay.status = N'paid'
+JOIN dbo.order_items   AS oi  ON oi.order_id  = o.id
+JOIN dbo.products      AS pr  ON pr.id        = oi.product_id
+WHERE o.created_at >= DATEADD(day, -30, CAST(GETDATE() AS date))
+GROUP BY pr.id, pr.name
+ORDER BY qty_sold DESC;

@@ -1,14 +1,10 @@
-select cus.id, cus.name, COUNT(*) as jumlah, AVG(p.amount) as avg
-
-from customers as cus
-left join orders as o on o.customer_id = cus.id
-left join payments as p on p.order_id = o.id
-
-where p.status = 'paid'
-
-group by cus.name, cus.id
-
-order by AVG(p.amount) desc
-
-
-
+SELECT 
+    cus.id AS customer_id, 
+    cus.name AS customer_name,
+    COUNT(p.id) AS total_paid_orders,
+    AVG(p.amount) AS avg_paid_amount
+FROM customers AS cus
+LEFT JOIN orders AS o ON o.customer_id = cus.id
+LEFT JOIN payments AS p ON p.order_id = o.id AND p.status = 'paid'
+GROUP BY cus.id, cus.name
+ORDER BY avg_paid_amount DESC;

@@ -4,21 +4,15 @@ const stok = {
     jaket: 2,
     topi: 7
 };
-var hasil = "[";
-
 
 function cekStok(obj, batas) {
+    const hasil = [];             // bikin array kosong
     for (let item in obj) {
         if (obj[item] <= batas) {
-            hasil += item + ",";
+            hasil.push(item);         // tambahkan item
         }
     }
-
-    hasil = hasil.slice(0, -1);
-    hasil += "]";
-    return hasil;
+    return hasil;                 // kembalikan array
 }
 
-
-var hasil2 = cekStok(stok, 5);
-console.log(hasil2);
+console.log(cekStok(stok, 5));  // ["sepatu", "jaket"]
